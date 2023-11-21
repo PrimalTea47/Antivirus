@@ -1,6 +1,5 @@
 import pygame
 from classes import *
-import time
 
 def menu():
     pygame.init()
