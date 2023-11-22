@@ -80,15 +80,15 @@ def niveau_1():
 
     #Block
     img_block = pygame.image.load('assets/molecule/block.png')
-    img_block_hitbox = img_block.get_rect(center=(300,300))
+    img_block_hitbox = img_block.get_rect(center=(450,570))
 
     #Red
     img_red = pygame.image.load('assets/molecule/3.png')
-    img_red_hitbox = img_red.get_rect(center = (600,700))
+    img_red_hitbox = [pygame.Rect((260,380,80,70)), pygame.Rect((340,460,80,70)), pygame.Rect(300,420,80,70)]
 
     #Purple
     img_purple = pygame.image.load('assets/molecule/5.png')
-    img_purple_hitbox = img_purple.get_rect(center=(100,600))
+    img_purple_hitbox = [pygame.Rect(110,605,70,70), pygame.Rect(110,760,80,80), pygame.Rect(125,680,50,80), pygame.Rect(260,610,80,80), pygame.Rect(185,620,80,55)]
 
     #Restart & Home
     recommencer = Restart(screen)
@@ -96,11 +96,14 @@ def niveau_1():
     retour_menu = Casa(screen)
     retour_menu.casa_button()
 
-    control_list = [img_red_hitbox, img_purple_hitbox]
+    control_list = [img_red_hitbox,img_purple_hitbox]
     control_list_names = ['Rouge', 'Violet']
     control_color = [(255,0,0),(153, 0, 255)]
+    control_coordinates = [[250,370],[180,300]]
+    #[100,600]
 
-
+    replace_haut = replace_bas = replace_droit = replace_gauche = False
+    show_hitbox = False
 
     moving = 0
 
@@ -129,34 +132,76 @@ def niveau_1():
             
 
             #bouger les rectangles TOUT EN GÉRANT LES COLLISIONS
+            #déplacer rectangles
             if event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_UP:
+                    for i in range(len(control_list[moving])):
+                        control_list[moving][i].y -= 10
+                    control_coordinates[moving][1] -= 10
+
+                    for i in range(len(control_list[moving])):
+                        if control_list[moving][i].collidelistall(control_list[not moving]):
+                            replace_haut = True
+                    
+                    if replace_haut:
+                        for i in range(len(control_list[moving])):
+                            control_list[moving][i].y += 10
+                        control_coordinates[moving][1] += 10
+                    replace_haut = False
+
+                    
                 
                 if event.key == pygame.K_DOWN:
-                    control_list[moving].x , control_list[moving].y  = control_list[moving].x + 10 , control_list[moving].y + 10
+                    for i in range(len(control_list[moving])):
+                        control_list[moving][i].y += 10
+                    control_coordinates[moving][1] += 10
+
+                    for i in range(len(control_list[moving])):
+                        if control_list[moving][i].collidelistall(control_list[not moving]):
+                            replace_bas = True
                     
-                    if img_block_hitbox.collidelistall(control_list) or pygame.Rect.colliderect(img_purple_hitbox, img_red_hitbox):
-                        control_list[moving].x , control_list[moving].y  = control_list[moving].x - 10 , control_list[moving].y - 10
+                    if replace_bas:
+                        for i in range(len(control_list[moving])):
+                            control_list[moving][i].y -= 10
+                        control_coordinates[moving][1] -= 10
+                    replace_bas = False
                 
-                
-                if event.key == pygame.K_UP:
-                    control_list[moving].x , control_list[moving].y  = control_list[moving].x - 10 , control_list[moving].y - 10
-                    
-                    if img_block_hitbox.collidelistall(control_list) or pygame.Rect.colliderect(img_purple_hitbox, img_red_hitbox):
-                        control_list[moving].x , control_list[moving].y  = control_list[moving].x + 10 , control_list[moving].y + 10
-                        
-                    
+
+
+
                 if event.key == pygame.K_RIGHT:
-                    control_list[moving].x , control_list[moving].y  = control_list[moving].x + 10 , control_list[moving].y - 10            
+                    for i in range(len(control_list[moving])):
+                        control_list[moving][i].x += 10
+                    control_coordinates[moving][0] += 10
+
+                    for i in range(len(control_list[moving])):
+                        if control_list[moving][i].collidelistall(control_list[not moving]):
+                            replace_droit = True
                     
-                    if img_block_hitbox.collidelistall(control_list) or pygame.Rect.colliderect(img_purple_hitbox, img_red_hitbox):
-                        control_list[moving].x , control_list[moving].y  = control_list[moving].x - 10 , control_list[moving].y + 10 
+                    if replace_droit:
+                        for i in range(len(control_list[moving])):
+                            control_list[moving][i].x -= 10
+                        control_coordinates[moving][0]-= 10
+                    replace_droit = False
                 
-                
+
+
+
                 if event.key == pygame.K_LEFT:
-                    control_list[moving].x , control_list[moving].y  = control_list[moving].x - 10 , control_list[moving].y + 10
+                    for i in range(len(control_list[moving])):
+                        control_list[moving][i].x -= 10
+                    control_coordinates[moving][0] -= 10
+
+                    for i in range(len(control_list[moving])):
+                        if control_list[moving][i].collidelistall(control_list[not moving]):
+                            replace_gauche = True
                     
-                    if img_block_hitbox.collidelistall(control_list) or pygame.Rect.colliderect(img_purple_hitbox, img_red_hitbox):
-                        control_list[moving].x , control_list[moving].y  = control_list[moving].x + 10 , control_list[moving].y - 10
+                    if replace_gauche:
+                        for i in range(len(control_list[moving])):
+                            control_list[moving][i].x += 10
+                        control_coordinates[moving][0] += 10
+                    replace_gauche = False
                     
                 
                 #gérer le changement de rectangles si '(CTRL) droit' est appuyé
@@ -165,12 +210,20 @@ def niveau_1():
                         moving = 0
                     else:
                         moving += 1
+                
+                #gérer l'affichage des hitboxes
+                if event.key == pygame.K_h:
+                    show_hitbox = not show_hitbox
+                
+                if event.key == pygame.K_c:
+                    print(control_coordinates[1])
                         
                 
             
             #Le but du jeu est atteint
+            """
             if pygame.Rect.colliderect(img_red_hitbox, black_back):
-                menu()
+                menu()"""
                               
                 
             
@@ -183,13 +236,17 @@ def niveau_1():
 
             #afficher les images
             screen.blit(img_block, img_block_hitbox)
-            screen.blit(img_red, img_red_hitbox)
-            screen.blit(img_purple, img_purple_hitbox)
+            screen.blit(img_red,control_coordinates[0])
+            screen.blit(img_purple, control_coordinates[1])
             recommencer.show_restart_button()
             retour_menu.show_home_button()
-            pygame.draw.rect(screen, (0,0,255), img_red_hitbox, 2)
-            pygame.draw.rect(screen, (0,0,255), img_purple_hitbox, 2)
-            pygame.draw.rect(screen, (0,0,255), img_block_hitbox, 2)
+
+            if show_hitbox:
+                for i in range(len(img_purple_hitbox)):
+                    pygame.draw.rect(screen, control_color[1], img_purple_hitbox[i], 2)
+
+                for i in range(len(img_red_hitbox)):
+                    pygame.draw.rect(screen, control_color[0], img_red_hitbox[i], 2)
 
             #bordures
             pygame.draw.rect(screen, (255,0,0), bordure_1)
