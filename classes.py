@@ -26,17 +26,3 @@ class Restart:
 
 	def get_rect_restart(self):
 		return self.hit_restart_button
-
-
-class Casa:
-	def __init__(self, fenetre):
-		self.fenetre = fenetre
-	def casa_button(self):
-		self.img_home = pygame.image.load('assets/home.png')
-		self.home_button = pygame.transform.scale(self.img_home, (100,100))
-		self.hit_home_button = self.home_button.get_rect(center=(600,100))
-	def show_home_button(self):
-		self.fenetre.blit(self.home_button, self.hit_home_button)
-	def get_rect_home(self):
-		return self.hit_home_button
-	
