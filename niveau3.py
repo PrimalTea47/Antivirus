@@ -21,26 +21,26 @@ def niveau_3():
 
     #Block
     img_block = pygame.image.load('assets/molecule/block.png')
-    img_block_hitbox = pygame.Rect(410,530,80,80)
+    img_block_hitbox = pygame.Rect(410,390,70,70)
 
     #Block2
-
+    img_block2_hitbox = pygame.Rect(130,680,70,70)
 
     #Orange
     img_orange = pygame.image.load('assets/molecule/4.png')
-    img_orange_hitbox = [pygame.Rect(30,10,10,10)]
+    img_orange_hitbox = [pygame.Rect(190,470,75,70), pygame.Rect(230,510,70,70), pygame.Rect(270,550,75,70), pygame.Rect(310,510,70,70), pygame.Rect(350,470,70,65)]
 
     #Red
     img_red = pygame.image.load('assets/molecule/3.png')
-    img_red_hitbox = [pygame.Rect((260,380,80,70)), pygame.Rect((340,460,80,70)), pygame.Rect(300,420,70,70)]
+    img_red_hitbox = [pygame.Rect((410,525,65,70)), pygame.Rect((485,605,75,70)), pygame.Rect(445,565,70,70)]
 
     #Darkblue
     img_darkblue = pygame.image.load('assets/molecule/6.png')
-    img_darkblue_hitbox = [pygame.Rect(190,305,70,70), pygame.Rect(190,460,80,80), pygame.Rect(205,380,50,80), pygame.Rect(340,310,80,80), pygame.Rect(265,320,80,55)]
+    img_darkblue_hitbox = [pygame.Rect(555,375,70,70), pygame.Rect(555,530,75,75), pygame.Rect(565,445,50,80), pygame.Rect(555,685,75,75), pygame.Rect(565,605,50,80)]
 
     #Green
     img_green = pygame.image.load('assets/molecule/1.png')
-    img_green_hitbox = [pygame.Rect(10,10,10,10)]
+    img_green_hitbox = [pygame.Rect(120,390,75,70), pygame.Rect(120,545,75,70), pygame.Rect(160,585,70,70), pygame.Rect(200,615,75,70), pygame.Rect(135,465,50,80)]
 
     #Restart & Home
     recommencer = Restart(screen)
@@ -49,8 +49,9 @@ def niveau_3():
     control_list = [img_red_hitbox, img_orange_hitbox, img_darkblue_hitbox, img_green_hitbox]
     control_list_names = ['Rouge', 'Orange', 'Bleu foncé', 'Vert clair']
     control_color = [(255,0,0), (217, 95, 9),(0, 0, 255), (123, 191, 46)]
-    control_coordinates = [[250,370],[180,300], [400,400], [600,600]]
+    control_coordinates = [[395,515],[175,455], [540,350], [110,380]]
     control_bordures = [bordure_1, bordure_2, bordure_3, bordure_4]
+    control_block = [img_block_hitbox, img_block2_hitbox]
 
     replace_haut = replace_bas = replace_droit = replace_gauche = False
     show_hitbox = False
@@ -84,12 +85,15 @@ def niveau_3():
                 if event.key == pygame.K_UP:
                     for i in range(len(control_list[moving])):
                         control_list[moving][i].y -= 10
-                        control_list[moving][i].x += 10
+                        control_list[moving][i].x -= 10
                     control_coordinates[moving][1] -= 10
-                    control_coordinates[moving][0] += 10
+                    control_coordinates[moving][0] -= 10
                     #Collisions (bcp de possibilités)
                     for i in range(len(control_list[moving])):
-                        if control_list[moving][i].collidelistall(control_list[not moving]) or pygame.Rect.colliderect(control_list[moving][i], img_block_hitbox):
+                        if control_list[moving][i].collidelistall(control_list[not moving]) or control_list[moving][i].collidelistall(control_block):
+                            replace_haut = True
+                        
+                        if pygame.Rect.colliderect(img_green_hitbox[i], img_orange_hitbox[i]):
                             replace_haut = True
                         
                         elif control_list[moving][i].collidelistall(control_bordures):
@@ -99,9 +103,9 @@ def niveau_3():
                     if replace_haut:
                         for i in range(len(control_list[moving])):
                             control_list[moving][i].y += 10
-                            control_list[moving][i].x -= 10
+                            control_list[moving][i].x += 10
                         control_coordinates[moving][1] += 10
-                        control_coordinates[moving][0] -= 10
+                        control_coordinates[moving][0] += 10
                     replace_haut = False
 
                     
@@ -109,9 +113,9 @@ def niveau_3():
                 if event.key == pygame.K_DOWN:
                     for i in range(len(control_list[moving])):
                         control_list[moving][i].y += 10
-                        control_list[moving][i].x -= 10
+                        control_list[moving][i].x += 10
                     control_coordinates[moving][1] += 10
-                    control_coordinates[moving][0] -= 10
+                    control_coordinates[moving][0] += 10
 
                     for i in range(len(control_list[moving])):
                         if control_list[moving][i].collidelistall(control_list[not moving]) or pygame.Rect.colliderect(control_list[moving][i], img_block_hitbox):
@@ -123,9 +127,9 @@ def niveau_3():
                     if replace_bas:
                         for i in range(len(control_list[moving])):
                             control_list[moving][i].y -= 10
-                            control_list[moving][i].x += 10
+                            control_list[moving][i].x -= 10
                         control_coordinates[moving][1] -= 10
-                        control_coordinates[moving][0] += 10
+                        control_coordinates[moving][0] -= 10
                     replace_bas = False
                 
 
@@ -134,9 +138,9 @@ def niveau_3():
                 if event.key == pygame.K_RIGHT:
                     for i in range(len(control_list[moving])):
                         control_list[moving][i].x += 10
-                        control_list[moving][i].y += 10
+                        control_list[moving][i].y -= 10
                     control_coordinates[moving][0] += 10
-                    control_coordinates[moving][1] += 10
+                    control_coordinates[moving][1] -= 10
 
                     for i in range(len(control_list[moving])):
                         if control_list[moving][i].collidelistall(control_list[not moving]) or pygame.Rect.colliderect(control_list[moving][i], img_block_hitbox):
@@ -148,9 +152,9 @@ def niveau_3():
                     if replace_droit:
                         for i in range(len(control_list[moving])):
                             control_list[moving][i].x -= 10
-                            control_list[moving][i].y -= 10
+                            control_list[moving][i].y += 10
                         control_coordinates[moving][0]-= 10
-                        control_coordinates[moving][1] -= 10
+                        control_coordinates[moving][1] += 10
                     replace_droit = False
                 
 
@@ -159,9 +163,9 @@ def niveau_3():
                 if event.key == pygame.K_LEFT:
                     for i in range(len(control_list[moving])):
                         control_list[moving][i].x -= 10
-                        control_list[moving][i].y -= 10
+                        control_list[moving][i].y += 10
                     control_coordinates[moving][0] -= 10
-                    control_coordinates[moving][1] -=10
+                    control_coordinates[moving][1] +=10
 
                     for i in range(len(control_list[moving])):
                         if control_list[moving][i].collidelistall(control_list[not moving]) or pygame.Rect.colliderect(control_list[moving][i], img_block_hitbox):
@@ -173,9 +177,9 @@ def niveau_3():
                     if replace_gauche:
                         for i in range(len(control_list[moving])):
                             control_list[moving][i].x += 10
-                            control_list[moving][i].y += 10
+                            control_list[moving][i].y -= 10
                         control_coordinates[moving][0] += 10
-                        control_coordinates[moving][1] += 10
+                        control_coordinates[moving][1] -= 10
                     replace_gauche = False
                     
                 
@@ -189,6 +193,7 @@ def niveau_3():
                 #gérer l'affichage des hitboxes
                 if event.key == pygame.K_h:
                     show_hitbox = not show_hitbox
+                
                                       
                 
             
@@ -208,7 +213,8 @@ def niveau_3():
             write_text('H pour afficher/masquer les hitboxes', little_font, (255,255,255), 0, 100, screen)
 
             #afficher les images
-            screen.blit(img_block, (400,520))
+            screen.blit(img_block, (400,380))
+            screen.blit(img_block, (115,665))
             screen.blit(img_red,control_coordinates[0])
             screen.blit(img_darkblue, control_coordinates[2])
             screen.blit(img_green, control_coordinates[3])
@@ -221,8 +227,6 @@ def niveau_3():
 
                 for i in range(len(img_red_hitbox)):
                     pygame.draw.rect(screen, control_color[0], img_red_hitbox[i], 2)
-                
-                pygame.draw.rect(screen, (100,100,100), img_block_hitbox, 2)
 
                 for i in range(4):
                     pygame.draw.rect(screen, (255,255,255), control_bordures[i], 2)
@@ -232,6 +236,9 @@ def niveau_3():
                 
                 for i in range(len(img_green_hitbox)):
                     pygame.draw.rect(screen, control_color[3], img_green_hitbox[i], 2)
+                
+                for i in range(2):
+                    pygame.draw.rect(screen, (100,100,100), control_block[i], 2)
 
             
 
