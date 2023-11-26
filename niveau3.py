@@ -324,4 +324,3 @@ def niveau_3():
         pygame.display.update()
 
     pygame.quit()
-niveau_3()
