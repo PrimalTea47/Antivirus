@@ -78,9 +78,9 @@ def niveau_2():
                 if event.key == pygame.K_UP:
                     for i in range(len(control_list[moving])):
                         control_list[moving][i].y -= 10
-                        control_list[moving][i].x += 10
+                        control_list[moving][i].x -= 10
                     control_coordinates[moving][1] -= 10
-                    control_coordinates[moving][0] += 10
+                    control_coordinates[moving][0] -= 10
                     #Collisions (bcp de possibilités)
                     for i in range(len(control_list[moving])):
                         if control_list[moving][i].collidelistall(control_list[not moving]) or control_list[moving][i].collidelistall(control_block):
@@ -93,9 +93,9 @@ def niveau_2():
                     if replace_haut:
                         for i in range(len(control_list[moving])):
                             control_list[moving][i].y += 10
-                            control_list[moving][i].x -= 10
+                            control_list[moving][i].x += 10
                         control_coordinates[moving][1] += 10
-                        control_coordinates[moving][0] -= 10
+                        control_coordinates[moving][0] += 10
                     replace_haut = False
 
                     
@@ -103,9 +103,9 @@ def niveau_2():
                 if event.key == pygame.K_DOWN:
                     for i in range(len(control_list[moving])):
                         control_list[moving][i].y += 10
-                        control_list[moving][i].x -= 10
+                        control_list[moving][i].x += 10
                     control_coordinates[moving][1] += 10
-                    control_coordinates[moving][0] -= 10
+                    control_coordinates[moving][0] += 10
 
                     for i in range(len(control_list[moving])):
                         if control_list[moving][i].collidelistall(control_list[not moving]) or control_list[moving][i].collidelistall(control_block):
@@ -117,9 +117,9 @@ def niveau_2():
                     if replace_bas:
                         for i in range(len(control_list[moving])):
                             control_list[moving][i].y -= 10
-                            control_list[moving][i].x += 10
+                            control_list[moving][i].x -= 10
                         control_coordinates[moving][1] -= 10
-                        control_coordinates[moving][0] += 10
+                        control_coordinates[moving][0] -= 10
                     replace_bas = False
                 
 
@@ -128,9 +128,9 @@ def niveau_2():
                 if event.key == pygame.K_RIGHT:
                     for i in range(len(control_list[moving])):
                         control_list[moving][i].x += 10
-                        control_list[moving][i].y += 10
+                        control_list[moving][i].y -= 10
                     control_coordinates[moving][0] += 10
-                    control_coordinates[moving][1] += 10
+                    control_coordinates[moving][1] -= 10
 
                     for i in range(len(control_list[moving])):
                         if control_list[moving][i].collidelistall(control_list[not moving]) or control_list[moving][i].collidelistall(control_block):
@@ -142,9 +142,9 @@ def niveau_2():
                     if replace_droit:
                         for i in range(len(control_list[moving])):
                             control_list[moving][i].x -= 10
-                            control_list[moving][i].y -= 10
+                            control_list[moving][i].y += 10
                         control_coordinates[moving][0]-= 10
-                        control_coordinates[moving][1] -= 10
+                        control_coordinates[moving][1] += 10
                     replace_droit = False
                 
 
@@ -153,9 +153,9 @@ def niveau_2():
                 if event.key == pygame.K_LEFT:
                     for i in range(len(control_list[moving])):
                         control_list[moving][i].x -= 10
-                        control_list[moving][i].y -= 10
+                        control_list[moving][i].y += 10
                     control_coordinates[moving][0] -= 10
-                    control_coordinates[moving][1] -=10
+                    control_coordinates[moving][1] +=10
 
                     for i in range(len(control_list[moving])):
                         if control_list[moving][i].collidelistall(control_list[not moving]) or control_list[moving][i].collidelistall(control_block):
@@ -167,9 +167,9 @@ def niveau_2():
                     if replace_gauche:
                         for i in range(len(control_list[moving])):
                             control_list[moving][i].x += 10
-                            control_list[moving][i].y += 10
+                            control_list[moving][i].y -= 10
                         control_coordinates[moving][0] += 10
-                        control_coordinates[moving][1] += 10
+                        control_coordinates[moving][1] -= 10
                     replace_gauche = False
                     
                 
