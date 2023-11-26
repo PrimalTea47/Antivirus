@@ -11,7 +11,7 @@ def write_text(text: str, font, color, x, y, fenetre):
 
 
 
-
+#classe pour afficher le bouton Recommencer
 class Restart:
 	def __init__(self,fenetre):
 		self.fenetre = fenetre
