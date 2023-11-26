@@ -1,7 +1,7 @@
 import pygame
 pygame.init()
 
-font = pygame.font.SysFont('arialblack', 75)
+font = pygame.font.SysFont('arialblack', 40)
 little_font = pygame.font.SysFont('arialblack', 30)
 
 #écriture de texte dans la fenêtre

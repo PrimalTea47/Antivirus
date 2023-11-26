@@ -93,10 +93,16 @@ def niveau_3():
                         if control_list[moving][i].collidelistall(control_list[not moving]) or control_list[moving][i].collidelistall(control_block):
                             replace_haut = True
                         
-                        if pygame.Rect.colliderect(img_green_hitbox[i], img_orange_hitbox[i]):
+                        #collisions entre orange et vert
+                        elif pygame.Rect.colliderect(img_green_hitbox[i], img_orange_hitbox[i]):
                             replace_haut = True
                         
+                        #collisions avec les bordures
                         elif control_list[moving][i].collidelistall(control_bordures):
+                            replace_haut = True
+                    
+                    for i in range(len(img_red_hitbox)):
+                        if img_red_hitbox[i].collidelistall(img_darkblue_hitbox):
                             replace_haut = True
                     
                     
@@ -121,6 +127,11 @@ def niveau_3():
                         if control_list[moving][i].collidelistall(control_list[not moving]) or pygame.Rect.colliderect(control_list[moving][i], img_block_hitbox):
                             replace_bas = True
                         
+                        #collisions entre orange et vert
+                        elif pygame.Rect.colliderect(img_green_hitbox[i], img_orange_hitbox[i]):
+                            replace_bas = True
+                        
+                        #collisions avec les bordures
                         elif control_list[moving][i].collidelistall(control_bordures):
                             replace_bas = True
                     
@@ -146,6 +157,11 @@ def niveau_3():
                         if control_list[moving][i].collidelistall(control_list[not moving]) or pygame.Rect.colliderect(control_list[moving][i], img_block_hitbox):
                             replace_droit = True
                         
+                        #collisions entre orange et vert
+                        elif pygame.Rect.colliderect(img_green_hitbox[i], img_orange_hitbox[i]):
+                            replace_droit = True
+                        
+                        #collisions avec les bordures
                         elif control_list[moving][i].collidelistall(control_bordures):
                             replace_droit = True
                     
@@ -171,6 +187,11 @@ def niveau_3():
                         if control_list[moving][i].collidelistall(control_list[not moving]) or pygame.Rect.colliderect(control_list[moving][i], img_block_hitbox):
                             replace_gauche = True
                         
+                        #collisions entre orange et vert
+                        elif pygame.Rect.colliderect(img_green_hitbox[i], img_orange_hitbox[i]):
+                            replace_gauche = True
+                        
+                        #collisions avec les bordures
                         elif control_list[moving][i].collidelistall(control_bordures):
                             replace_gauche = True
                     
@@ -249,5 +270,3 @@ def niveau_3():
         pygame.display.update()
 
     pygame.quit()
-
-niveau_3()
